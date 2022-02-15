@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import rospy
 from geometry_msgs.msg import Twist
+from math import radians
 
 class  StepForward():
 	# how large should one "step" of this bot be (in meters)
@@ -55,10 +56,18 @@ class  StepForward():
     def take_step (self, dir):
 	# Twist is a datatype for velocity
         move_cmd = Twist()
-	# let's go forward at 0.2 m/s
+	# let's go forward at the preset speed
         move_cmd.linear.x = speed 
+	# let's turn at the specific radians
+	move_cmd.angular.z = dir
+	self.cmd_vel.publish(move_cmd)
+
+    def turn (self, dir):
+	# Twist is a datatype for velocity
+        move_cmd = Twist()
+        move_cmd.linear.x = 0
 	# let's turn at 0 radians/s
-	move_cmd.angular.z = 0
+	move_cmd.angular.z = dir
 	self.cmd_vel.publish(move_cmd)
         
     def shutdown(self):
@@ -74,5 +83,7 @@ if __name__ == '__main__':
         command = StepForward()
 	command.take_step(0)
 	command.take_step(4)
+	command.turn(radians(90))
+	
     except:
         rospy.loginfo("GoForward node terminated.")
