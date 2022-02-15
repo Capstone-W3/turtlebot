@@ -20,7 +20,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import rospy
 from geometry_msgs.msg import Twist
 
-class GoForward():
+class  StepForward():
+	# how large should one "step" of this bot be (in meters)
+	size = 0.1
+	# meters per second
+	speed = 0.1 
+	# how long the turtlebot takes to cover one step
+	dur = size/speed
+	
     def __init__(self):
         # initiliaze
         rospy.init_node('GoForward', anonymous=False)
@@ -37,21 +44,22 @@ class GoForward():
      
 	#TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         r = rospy.Rate(10);
-
+	
         # Twist is a datatype for velocity
         move_cmd = Twist()
 	# let's go forward at 0.2 m/s
-        move_cmd.linear.x = 0.2
+        move_cmd.linear.x = speed 
 	# let's turn at 0 radians/s
 	move_cmd.angular.z = 0
-
-	# as long as you haven't ctrl + c keeping doing...
-        while not rospy.is_shutdown():
-	    # publish the velocity
-            self.cmd_vel.publish(move_cmd)
-	    # wait for 0.1 seconds (10 HZ) and publish again
-            r.sleep()
-                        
+		
+    def take_step (self, dir):
+	# Twist is a datatype for velocity
+        move_cmd = Twist()
+	# let's go forward at 0.2 m/s
+        move_cmd.linear.x = speed 
+	# let's turn at 0 radians/s
+	move_cmd.angular.z = 0
+	self.cmd_vel.publish(move_cmd)
         
     def shutdown(self):
         # stop turtlebot
@@ -63,6 +71,8 @@ class GoForward():
  
 if __name__ == '__main__':
     try:
-        GoForward()
+        command = StepForward()
+	command.take_step(0)
+	command.take_step(4)
     except:
         rospy.loginfo("GoForward node terminated.")
