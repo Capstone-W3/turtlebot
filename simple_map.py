@@ -45,13 +45,8 @@ class  StepForward():
      
 		#TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         	r = rospy.Rate(10);
-	
-        	# Twist is a datatype for velocity
-        	move_cmd = Twist()
-		# let's go forward at 0.2 m/s
-        	move_cmd.linear.x = speed 
-		# let's turn at 0 radians/s
-		move_cmd.angular.z = 0
+		
+		
 		
 	def take_step (self, dir):
 		# Twist is a datatype for velocity
@@ -81,6 +76,7 @@ class  StepForward():
 if __name__ == '__main__':
     	try:
         	command = StepForward()
+		rospy.loginfo("Hello, world.")
 		#command.take_step(0)
 		#command.take_step(4)
 		#command.turn(radians(90))
