@@ -81,8 +81,8 @@ class  StepForward():
 if __name__ == '__main__':
     	try:
         	command = StepForward()
-		command.take_step(0)
-		command.take_step(4)
+		#command.take_step(0)
+		#command.take_step(4)
 		command.turn(radians(90))
 	
     	except:
