@@ -83,7 +83,7 @@ if __name__ == '__main__':
         	command = StepForward()
 		#command.take_step(0)
 		#command.take_step(4)
-		command.turn(radians(90))
+		#command.turn(radians(90))
 	
     	except:
         	rospy.loginfo("GoForward node terminated.")
